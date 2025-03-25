@@ -1,0 +1,16 @@
+--q-primary: #3369e8;
+--q-positive: #009925;
+--q-negative: #d50f25;
+--q-warning: #EEB211;
+
+--q-primary: #1976D2;
+--q-secondary: #26A69A;
+--q-accent: #9C27B0;
+--q-positive: #21BA45;
+--q-negative: #C10015;
+--q-info: #31CCEC;
+--q-warning: #F2C037;
+--q-dark: #1D1D1D;
+--q-dark-page: #121212;
+
+'#3369e8', '#009925', '#d50f25', '#EEB211', '#9C27B0'
