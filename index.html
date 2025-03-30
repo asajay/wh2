@@ -2,22 +2,192 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Wheel Picker - Random Name Picker</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        
+        /* Desktop Menu */
+        .menu-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #3369E8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        
+        .menu-items {
+            display: flex;
+        }
+        
+        .menu-item {
+            color: #3e5c63;
+            text-decoration: none;
+            padding: 15px 25px;
+            margin: 0 10px;
+            font-size: 18px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            color: #3498db;
+        }
+        
+        .menu-item::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: #3498db;
+            transition: width 0.3s ease;
+        }
+        
+        .menu-item:hover::after {
+            width: 70%;
+        }
+        
+        /* Mobile Menu Button - Now on the right */
+        .menu-btn {
+            display: none;
+            cursor: pointer;
+            padding: 15px;
+            position: absolute;
+            right: 10px; /* Changed from left to right */
+        }
+        
+        .menu-btn span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #ecf0f1;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        /* Mobile Menu - Now slides from right */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -50%; /* Changed from left to right */
+            width: 50%;
+            background-color: #ffffff;
+            z-index: 999;
+            transition: all 0.3s ease;
+            padding-top: 80px;
+            /* box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2); Shadow on left side now */
+        }
+        
+        .mobile-menu.active {
+            right: 0; /* Changed from left to right */
+        }
+        
+        .mobile-menu .menu-item {
+            display: block;
+            padding: 8px 12px;
+            margin: 0;
+            /* border-bottom: 1px solid #34495e; */
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .content {
+            margin-top: 60px;
+            padding: 20px;
+            height: 2000px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-items {
+                display: none;
+            }
+            
+            .menu-btn {
+                display: block;
+            }
+            
+            .menu-btn.active span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+            
+            .menu-btn.active span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .menu-btn.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Wheel Picker</h1>
-            <p>Random Name Picker</p>
-        </header>
+        <div class="menu-bar">
+            <div class="menu-items">
+                <a href="#" class="menu-item">Menu 1</a>
+                <a href="#" class="menu-item">Menu 2</a>
+                <a href="#" class="menu-item">Menu 3</a>
+            </div>
+            <div class="menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        
+        <div class="mobile-menu">
+            <a href="#" class="menu-item">Menu 1</a>
+            <a href="#" class="menu-item">Menu 2</a>
+            <a href="#" class="menu-item">Menu 3</a>
+        </div>
+        
+        <div class="overlay"></div>
+
+
+
 
         <main>
 
-            <div class="controls-left">
-                
+            <div class="controls-left first-section">
+                Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here Ads Here 
             </div>
 
             <div class="wheel-container">
@@ -60,14 +230,19 @@
                     </div>
                 </div>
             </div>
+
+
+
         </main>
 
+        
         <footer>
             <p>© 2025 Wheel Picker. All rights reserved.</p>
         </footer>
     </div>
-    <div class="overlay"></div>
-    <div class="celebration-overlay">
+    
+    <div class="overlay1"></div>
+    <div class="celebration-overlay1">
         <div class="celebration-content">
             <h1>🎉<br>Congratulations!<br>🎉</h1>
             <p id="celebrationWinner"></p>
@@ -75,6 +250,7 @@
     </div>
     <div class="winner-announcement">
         <h2>Winner Selected!</h2>
+        <h3>🎉Congratulations!!🎉</h3>
         <p id="winnerName"></p>
         <button id="removeWinner">Remove Winner</button>
         <button id="keepWinner">Keep Winner</button>
@@ -83,5 +259,22 @@
     <audio id="celebrationSound" src="./assets/winning-music-congrats.mp3"></audio>
     <audio id="winningSound" src="https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3"></audio>
     <script src="script.js"></script>
+    <script>
+        const menuBtn = document.querySelector('.menu-btn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const overlay = document.querySelector('.overlay');
+        
+        menuBtn.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+        
+        overlay.addEventListener('click', function() {
+            this.classList.remove('active');
+            menuBtn.classList.remove('active');
+            mobileMenu.classList.remove('active');
+        });
+    </script>
 </body>
 </html> 

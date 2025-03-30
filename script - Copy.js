@@ -7,11 +7,6 @@ class WheelPicker {
             '#3369e8', '#009925', '#d50f25', '#EEB211', '#9C27B0'
             
         ];
-        this.colorsS = [
-            '#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', 
-            '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', 
-            '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'
-        ];
         // '#D4A5A5', '#9B59B6', '#3498DB', '#E67E22', '#1ABC9C'
         this.isSpinning = false;
         this.currentRotation = 0;
@@ -23,7 +18,7 @@ class WheelPicker {
         this.confettiInterval = null;
         this.wheelColor = this.getStoredColor('wheelColor', '#FF5733');
         this.textColor = this.getStoredColor('textColor', '#FFFFFF');
-        this.spinDuration = this.getStoredNumber('spinDuration', 4);
+        this.spinDuration = this.getStoredNumber('spinDuration', 7);
         this.lastWinner = null;
 
         // Populate the textarea with stored names
@@ -170,155 +165,74 @@ class WheelPicker {
         this.ctx.fillText('Add names to begin', centerX, centerY);
     }
 
-    /// Old Animation  Start //////////////////
-    // createConfetti() {
-    //     const confetti = document.createElement('div');
-    //     confetti.className = 'confetti';
-        
-    //     // Random position
-    //     const left = Math.random() * 100;
-    //     confetti.style.left = left + 'vw';
-        
-    //     // Random delay
-    //     const delay = Math.random() * 2;
-    //     confetti.style.animationDelay = delay + 's';
-        
-    //     // Random size
-    //     const size = 5 + Math.random() * 10;
-    //     confetti.style.width = size + 'px';
-    //     confetti.style.height = size + 'px';
-        
-    //     // Random color
-    //     //const colors = ['#FFD700', '#FF0000', '#00FF00', '#0000FF', '#FF00FF', '#00FFFF', '#FFA500'];
-    //     const colors = ['#3369e8', '#009925', '#d50f25', '#EEB211', '#9C27B0'];
-    //     confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        
-    //     // Random shape
-    //     if (Math.random() > 0.5) {
-    //         confetti.style.borderRadius = '50%';
-    //     } else {
-    //         confetti.style.borderRadius = '0';
-    //     }
-        
-    //     document.body.appendChild(confetti);
-    //     this.confettiPieces.push(confetti);
-
-    //     // Remove confetti after animation
-    //     setTimeout(() => {
-    //         confetti.remove();
-    //         this.confettiPieces = this.confettiPieces.filter(c => c !== confetti);
-    //     }, 5000 + delay * 1000);
-    // }
-
-    // startConfetti() {
-    //     // Create initial confetti
-    //     for (let i = 0; i < 150; i++) { // Increased initial confetti
-    //         this.createConfetti();
-    //     }
-
-    //     // Continue creating confetti
-    //     this.confettiInterval = setInterval(() => {
-    //         if (this.confettiPieces.length < 300) { // Increased max confetti
-    //             this.createConfetti();
-    //         }
-    //     }, 50);
-    // }
-
-    // stopConfetti() {
-    //     clearInterval(this.confettiInterval);
-    //     this.confettiPieces.forEach(confetti => confetti.remove());
-    //     this.confettiPieces = [];
-    // }
-
-    ///////////// END /////////////////////
-
-    ///// New Animation /////
-
-    start() {
-        //this.playSound();
-        this.createExplosions(5, 400, 100);
-        //this.disableButton(2000);
-    }
-    
-    playSound() {
-        this.audio.currentTime = 0;
-        this.audio.play();
-        setTimeout(() => this.audio.pause(), 2000);
-    }
-    
-    createExplosions(count, interval, particlesPerExplosion) {
-        for (let i = 0; i < count; i++) {
-            setTimeout(() => this.createExplosion(particlesPerExplosion), i * interval);
-        }
-    }
-    
-    createExplosion(particleCount) {
-        for (let i = 0; i < particleCount; i++) {
-            setTimeout(() => this.createConfetti(), Math.random() * 200);
-        }
-    }
-    
     createConfetti() {
         const confetti = document.createElement('div');
         confetti.className = 'confetti';
         
-        // Set random properties
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.backgroundColor = this.colorsS[Math.floor(Math.random() * this.colorsS.length)];
-        const size = Math.random() * 10 + 5;
-        confetti.style.width = `${size}px`;
-        confetti.style.height = `${size}px`;
-        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+        // Random position
+        const left = Math.random() * 100;
+        confetti.style.left = left + 'vw';
+        
+        // Random delay
+        const delay = Math.random() * 2;
+        confetti.style.animationDelay = delay + 's';
+        
+        // Random size
+        const size = 5 + Math.random() * 10;
+        confetti.style.width = size + 'px';
+        confetti.style.height = size + 'px';
+        
+        // Random color
+        //const colors = ['#FFD700', '#FF0000', '#00FF00', '#0000FF', '#FF00FF', '#00FFFF', '#FFA500'];
+        const colors = ['#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', 
+                        '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', 
+                        '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'];
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Random shape
+        if (Math.random() > 0.5) {
+            confetti.style.borderRadius = '50%';
+        } else {
+            confetti.style.borderRadius = '0';
+        }
         
         document.body.appendChild(confetti);
-        
-        // Animation properties
-        const angle = Math.random() * Math.PI * 2;
-        const velocity = Math.random() * 5 + 2;
-        const rotation = Math.random() * 360;
-        const rotationSpeed = Math.random() * 10 - 5;
-        let posX = 0;
-        let posY = 0;
-        let time = 0;
-        const duration = Math.random() * 3000 + 2000;
-        
-        const animate = () => {
-            time += 16;
-            posX += Math.cos(angle) * velocity;
-            posY += Math.sin(angle) * velocity + 0.1 * time/100;
-            const currentRotation = rotation + rotationSpeed * time/100;
-            
-            confetti.style.transform = `translate(${posX}px, ${posY}px) rotate(${currentRotation}deg)`;
-            confetti.style.opacity = 1 - time/duration;
-            
-            if (time < duration) {
-                requestAnimationFrame(animate);
-            } else {
-                confetti.remove();
-            }
-        };
-        
-        requestAnimationFrame(animate);
-    }
-    
-    disableButton(duration) {
-        this.btn.disabled = true;
+        this.confettiPieces.push(confetti);
+
+        // Remove confetti after animation
         setTimeout(() => {
-            this.btn.disabled = false;
-        }, duration);
+            confetti.remove();
+            this.confettiPieces = this.confettiPieces.filter(c => c !== confetti);
+        }, 5000 + delay * 1000);
     }
 
+    startConfetti() {
+        // Create initial confetti
+        for (let i = 0; i < 150; i++) { // Increased initial confetti
+            this.createConfetti();
+        }
 
-    ////// End New Animation ///////
+        // Continue creating confetti
+        this.confettiInterval = setInterval(() => {
+            if (this.confettiPieces.length < 300) { // Increased max confetti
+                this.createConfetti();
+            }
+        }, 50);
+    }
+
+    stopConfetti() {
+        clearInterval(this.confettiInterval);
+        this.confettiPieces.forEach(confetti => confetti.remove());
+        this.confettiPieces = [];
+    }
 
     showCelebration(winner) {
         const celebrationOverlay = document.querySelector('.celebration-overlay1');
         const celebrationWinner = document.getElementById('celebrationWinner');
         
         celebrationWinner.textContent = winner;
-        //celebrationOverlay.style.display = 'flex';
-        //this.startConfetti();
-        this.start();
+        celebrationOverlay.style.display = 'flex';
+        this.startConfetti();
         this.celebrationSound.play();
 
         // Prevent scrolling
@@ -326,18 +240,10 @@ class WheelPicker {
 
         // Hide celebration after 5 seconds
         setTimeout(() => {
-            //celebrationOverlay.style.display = 'none';
-            
+            celebrationOverlay.style.display = 'none';
+            this.stopConfetti();
             this.showWinnerAnnouncement(winner);
-            //this.stopConfetti();
-        }, 400);
-
-        setTimeout(() => {
-            //celebrationOverlay.style.display = 'none';
-            
-            //this.showWinnerAnnouncement(winner);
-            // this.stopConfetti();
-        }, 4000);
+        }, 5000);
     }
 
     spin() {
@@ -360,8 +266,6 @@ class WheelPicker {
 
             const easing = 1 - Math.pow(1 - progress, 3);
             this.currentRotation = totalRotation * 2 * Math.PI * easing;
-            
-
 
             this.drawWheel();
 

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single-Class Confetti Celebration</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #111;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        
+        .container {
+            text-align: center;
+            color: white;
+            z-index: 10;
+        }
+        
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            background: linear-gradient(45deg, #FF5252, #FF4081);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 82, 82, 0.4);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 82, 82, 0.6);
+        }
+        
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 30px;
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Confetti Celebration</h1>
+        <button id="celebrateBtn">Start Celebration</button>
+    </div>
+    
+    <audio id="celebrationSound" src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" preload="auto"></audio>
+    
+    <script>
+        class ConfettiCelebration {
+            constructor() {
+                this.colorsS = [
+                    '#FF5252', '#FF4081', '#E040FB', '#7C4DFF', '#536DFE', 
+                    '#448AFF', '#40C4FF', '#18FFFF', '#64FFDA', '#69F0AE', 
+                    '#B2FF59', '#EEFF41', '#FFFF00', '#FFD740', '#FFAB40', '#FF6E40'
+                ];
+                this.audio = document.getElementById('celebrationSound');
+                this.btn = document.getElementById('celebrateBtn');
+                this.btn.addEventListener('click', () => this.start());
+            }
+            
+            start() {
+                this.playSound();
+                this.createExplosions(5, 400, 100);
+                this.disableButton(2000);
+            }
+            
+            playSound() {
+                this.audio.currentTime = 0;
+                this.audio.play();
+                setTimeout(() => this.audio.pause(), 2000);
+            }
+            
+            createExplosions(count, interval, particlesPerExplosion) {
+                for (let i = 0; i < count; i++) {
+                    setTimeout(() => this.createExplosion(particlesPerExplosion), i * interval);
+                }
+            }
+            
+            createExplosion(particleCount) {
+                for (let i = 0; i < particleCount; i++) {
+                    setTimeout(() => this.createConfetti(), Math.random() * 200);
+                }
+            }
+            
+            createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                
+                // Set random properties
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = this.colorsS[Math.floor(Math.random() * this.colorsS.length)];
+                const size = Math.random() * 10 + 5;
+                confetti.style.width = `${size}px`;
+                confetti.style.height = `${size}px`;
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                
+                document.body.appendChild(confetti);
+                
+                // Animation properties
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 5 + 2;
+                const rotation = Math.random() * 360;
+                const rotationSpeed = Math.random() * 10 - 5;
+                let posX = 0;
+                let posY = 0;
+                let time = 0;
+                const duration = Math.random() * 3000 + 2000;
+                
+                const animate = () => {
+                    time += 16;
+                    posX += Math.cos(angle) * velocity;
+                    posY += Math.sin(angle) * velocity + 0.1 * time/100;
+                    const currentRotation = rotation + rotationSpeed * time/100;
+                    
+                    confetti.style.transform = `translate(${posX}px, ${posY}px) rotate(${currentRotation}deg)`;
+                    confetti.style.opacity = 1 - time/duration;
+                    
+                    if (time < duration) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        confetti.remove();
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+            }
+            
+            disableButton(duration) {
+                this.btn.disabled = true;
+                setTimeout(() => {
+                    this.btn.disabled = false;
+                }, duration);
+            }
+        }
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ConfettiCelebration();
+        });
+    </script>
+</body>
+</html>
